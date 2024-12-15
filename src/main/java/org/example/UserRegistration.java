@@ -1,4 +1,7 @@
 package org.example;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class UserRegistration {
@@ -27,7 +30,13 @@ public class UserRegistration {
                 password.replaceAll("[a-zA-Z0-9]", "").length()==1;
 
     }
-
+    public static List<Boolean> validateEmailSamples(List<String> emails) {
+        List<Boolean> results = new ArrayList<>();
+        for (String email : emails) {
+            results.add(isValidEmail(email));
+        }
+        return results;
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -76,6 +85,19 @@ public class UserRegistration {
             System.out.println("Invalid password. It must be at least 8 characters long, contain at least one uppercase letter, one numeric digit, and exactly one special character.");
         }
 
+        List<String> emailSamples = Arrays.asList(
+                "abc@yahoo.com", "abc-100@yahoo.com", "abc.100@yahoo.com", "abc111@abc.com", "abc-100@abc.net",
+                "abc.100@abc.com.au", "abc@1.com", "abc@gmail.com.com", "abc+100@gmail.com",
+                "abc", "abc@.com.my", "abc123@gmail.a", "abc123@.com", "abc123@.com.com",
+                ".abc@abc.com", "abc()*@gmail.com", "abc@%*.com", "abc..2002@gmail.com",
+                "abc.@gmail.com", "abc@abc@gmail.com", "abc@gmail.com.1a", "abc@gmail.com.aa.au"
+        );
+
+        List<Boolean> results = validateEmailSamples(emailSamples);
+
+        for (int i = 0; i < emailSamples.size(); i++) {
+            System.out.println(emailSamples.get(i) + ": " + (results.get(i) ? "Valid" : "Invalid"));
+        }
         scanner.close();
     }
 }
