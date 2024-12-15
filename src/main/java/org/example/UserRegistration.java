@@ -20,6 +20,10 @@ public class UserRegistration {
     public static boolean isValidMobileNumber(String mobileNumber) {
         return mobileNumber.matches("^[0-9]{1,3} [0-9]{10}$");
     }
+    public static boolean isValidPassword(String password) {
+        return password.matches(".{8,}");
+    }
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -57,6 +61,15 @@ public class UserRegistration {
             System.out.println("Mobile number is valid.");
         } else {
             System.out.println("Invalid mobile number. It must follow the format: <country code> <10-digit number>.");
+        }
+
+        System.out.println("Enter your password:");
+        String password = scanner.nextLine();
+
+        if (isValidPassword(password)) {
+            System.out.println("Password is valid.");
+        } else {
+            System.out.println("Invalid password. It must be at least 8 characters long.");
         }
 
         scanner.close();
