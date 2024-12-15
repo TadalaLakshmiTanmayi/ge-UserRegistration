@@ -1,6 +1,8 @@
 package org.example;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -87,6 +89,43 @@ class UserRegistrationTest {
         assertFalse(UserRegistration.isValidPassword("Passw0rd"));
         assertFalse(UserRegistration.isValidPassword("Pass1234"));
         assertFalse(UserRegistration.isValidPassword("Pass1234!!!"));
+    }
+    // Happy Test Cases - Valid Emails
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "abc@yahoo.com",
+            "abc-100@yahoo.com",
+            "abc.100@yahoo.com",
+            "abc111@abc.com",
+            "abc-100@abc.net",
+            "abc.100@abc.com.au",
+            "abc@1.com",
+            "abc@gmail.com.com",
+            "abc+100@gmail.com"
+    })
+    public void testValidEmail(String email) {
+        assertTrue(UserRegistration.isValidEmail(email), email + " should be a valid email.");
+    }
+    // Sad Test Cases - Invalid Emails
+    @ParameterizedTest
+    @ValueSource(strings = {
+            "abc",                            // Must contain "@"
+            "abc@.com.my",                    // TLD cannot start with a dot
+            "abc123@gmail.a",                 // ".a" is not a valid TLD
+            "abc123@.com",                    // TLD cannot start with a dot
+            "abc123@.com.com",                // TLD cannot start with a dot
+            ".abc@abc.com",                   // Email's first character cannot start with "."
+            "abc()*@gmail.com",               // Only alphanumeric, underscore, and dash are allowed
+            "abc@%*.com",                     // TLD should only contain alphanumeric characters
+            "abc..2002@gmail.com",            // Double dots are not allowed
+            "abc.@gmail.com",                 // Email's last character cannot be a dot
+            "abc@abc@gmail.com",              // Double '@' is not allowed
+            "abc@gmail.com.1a",               // TLD with two characters cannot contain digits
+            "abc@gmail.com.aa.au"             // Cannot have multiple TLDs
+    })
+    public void testInvalidEmail(String email) {
+        assertFalse(UserRegistration.isValidEmail(email), email + " should be an invalid email.");
     }
 
 
