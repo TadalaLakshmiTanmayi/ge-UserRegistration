@@ -21,7 +21,7 @@ public class UserRegistration {
         return mobileNumber.matches("^[0-9]{1,3} [0-9]{10}$");
     }
     public static boolean isValidPassword(String password) {
-        return password.matches(".{8,}")  && password.matches(".*[A-Z].*");
+        return password.matches(".{8,}")  && password.matches(".*[A-Z].*") &&  password.matches(".*[0-9].*");
     }
 
 
@@ -69,9 +69,8 @@ public class UserRegistration {
         if (isValidPassword(password)) {
             System.out.println("Password is valid.");
         } else {
-            System.out.println("Invalid password. It must be at least 8 characters long and contain at least one uppercase letter.");
+            System.out.println("Invalid password. It must be at least 8 characters long, contain at least one uppercase letter, and include at least one numeric digit.");
         }
-
 
         scanner.close();
     }
