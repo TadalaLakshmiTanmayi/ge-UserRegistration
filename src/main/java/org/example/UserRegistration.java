@@ -17,6 +17,9 @@ public class UserRegistration {
         // Return whether the email matches the regex
         return email.matches(emailRegex);
     }
+    public static boolean isValidMobileNumber(String mobileNumber) {
+        return mobileNumber.matches("^[0-9]{1,3} [0-9]{10}$");
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -45,6 +48,15 @@ public class UserRegistration {
             System.out.println("Email is valid.");
         } else {
             System.out.println("Invalid email. It must follow the format: abc.xyz@bl.co.in.");
+        }
+
+        System.out.println("Enter your mobile number:");
+        String mobileNumber = scanner.nextLine();
+
+        if (isValidMobileNumber(mobileNumber)) {
+            System.out.println("Mobile number is valid.");
+        } else {
+            System.out.println("Invalid mobile number. It must follow the format: <country code> <10-digit number>.");
         }
 
         scanner.close();
